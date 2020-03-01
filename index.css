@@ -1,0 +1,73 @@
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+.game_details{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.target{
+    flex:2;
+    order:2;
+    flex-basis: 20%;
+    background-color: lightcoral;
+    text-align: center;
+}
+
+.player_1{
+    flex:1;
+    order:1;
+    flex-basis: 20%;
+    background-color: lightblue;
+    margin: auto;
+    text-align: center;
+}
+
+.player_2{
+    flex:1;
+    order:3;
+    flex-basis: 20%;
+    background-color: lightblue;
+    margin: auto;
+    text-align: center;
+}
+
+.score{
+    background-color:lightgreen;
+}
+
+.game{
+    align-self: center;
+}
+
+/* table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  } */
+
+.game{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: auto;
+}
+
+.grid_item > button{
+    background-color: rgb(76, 175, 175);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.hidden{
+    display: none;
+}
