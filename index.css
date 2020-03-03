@@ -51,15 +51,15 @@ body{
 
 .game{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     margin: auto;
 }
 
-.grid_item > button{
+.grid_item{
     background-color: rgb(76, 175, 175);
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 12px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

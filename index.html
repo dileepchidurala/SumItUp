@@ -7,35 +7,22 @@
         <div class="game_details">
             <div class="target">
                 <h1>Target </h1>
-                <h1 id="target_score" class="score">30</h1>
+                <h1 id="target_score" class="score"></h1>
+                <h1 id="target_timmer" class="timmer"></h1>
             </div>
             <div class="player_1">
-                <p>Player 1</p>
-                <h1 id="score_1" class="score">0</h1>
-                <p>30</p>
+                <p id="player_1">Player 1</p>
+                <h1 id="player_1_score" class="score"></h1>
+                <h1 id="player_1_timmer" class="timer"></h1>
             </div>
             <div class="player_2">
-                <p>Player 2</p>
-                <h1 id="score_2" class="score">0</h1>
-                <p>0</p>
+                <p id="player_2">Player 2</p>
+                <h1 id="player_2_score" class="score"></h1>
+                <h1 id="player_2_timmer" class="timmer"></h1>
             </div>
         </div>
-        <div id=player_turns><h1>Player'1 turn</h1></div>
-        <div id=timer>5</div>
-        <div id="temp" class="hidden">0</div>
-        <div class="game">
-            <div class="grid_item"><button id="0" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="1" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="2" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="3" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="4" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="5" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="6" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="7" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="8" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="9" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="10" onclick="click_btn(this.id)"></button></div>
-            <div class="grid_item"><button id="11" onclick="click_btn(this.id)"></button></div>
+        <br>
+        <div id="game_id" class="game">
         </div>
         <script src="index.js"></script>
     </body>
