@@ -184,6 +184,7 @@ class Player extends Clock{
         var add_value = document.getElementById("temp").innerHTML
         disable_btn(add_value)
         player_obj.player_score.innerHTML =  parseInt(player_obj.player_score.innerHTML)+ parseInt(add_value)
+        document.getElementById("temp").innerHTML = 0
     }
 }
 
@@ -221,7 +222,29 @@ class Game{
     }
 
     judge_game(){
-        console.log("test")
+        var sc1 = parseInt(document.getElementById("player_1_score").innerHTML)
+        var sc2 = parseInt(document.getElementById("player_2_score").innerHTML)
+        var trg = parseInt(document.getElementById("target_score").innerHTML)
+        var player_1 = document.getElementById("player_1").innerHTML
+        var player_2 = document.getElementById("player_2").innerHTML
+        if(sc1 > trg && sc2 > trg || sc1 == sc2){
+            alert("No one Wins")
+        }
+        else if(sc1==trg || sc2 > trg){
+            alert(player_1 + " wins")
+        }
+        else if(sc2==trg || sc1 > trg){
+            alert(player_2 + " wins")        
+        }
+        else{
+            if(trg-sc1 < trg - sc2){
+                alert(player_1 + " wins")
+            }
+            else{
+                alert(player_2 + " wins") 
+            }
+        }
+        location.reload()
     }
 }
 
