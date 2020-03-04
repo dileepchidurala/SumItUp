@@ -68,11 +68,20 @@
 
 function click_btn(id){
     var button = document.getElementById(id)
-    button.disabled = true;
-    button.style.backgroundColor = "lightgrey"
+    // button.disabled = true;
+    // button.style.backgroundColor = "lightgrey"
     document.getElementById("temp").innerHTML = button.innerHTML
 }
 
+function disable_btn(num){
+    var grid_elem = document.getElementById("game_id").children;
+    for(var idx = 0; idx<grid_elem.length; idx++){
+        if(grid_elem[idx].innerHTML == num){
+            grid_elem[idx].disabled = true;
+            grid_elem[idx].style.backgroundColor = "lightgrey"
+        }
+    }
+}
 // function timmer(){
 //     var secs = parseInt(document.getElementById("timer").innerHTML)
 //     if(secs == 0){
@@ -87,33 +96,23 @@ function click_btn(id){
 
 
 
-class Game{
-    constructor(player_1_name, player_2_name){
-        this.player_1 = player_1_name
-        this.player_2 = player_2_name
-    }
-    create_grid(){
-
-    }
-
-    create_target(){
-
-    }
-
-    fill_players(){
-
-    }
-
-    start_game(){
-
-    }
-
-    judge_game(){
-
-    }
-}
-
 class CreateLayout{
+    constructor(target_score, target_time, player_1_name, player_2_name, player_timer, grid_rows, grid_cols){
+        this.target_score = target_score
+        this.target_time = target_time
+        this.player_1_name = player_1_name.toUpperCase()
+        this.player_2_name = player_2_name.toUpperCase()
+        this.player_timmer = player_timer
+        this.grid_rows = grid_rows
+        this.grid_cols = grid_cols
+    }
+
+    create_layout(){
+        this.create_score_and_timmer_section("target", this.target_score, this.target_time)
+        this.create_player(1, this.player_1_name, 0, this.player_timmer)
+        this.create_player(2, this.player_2_name, 0, this.player_timmer)
+        this.create_grid(this.grid_rows, this.grid_cols)
+    }
 
     create_score_and_timmer_section(section, score, timmer_value){
         document.getElementById(section + "_score").innerHTML = score
@@ -147,14 +146,11 @@ class CreateLayout{
     }
 }
 
-create_layout = new CreateLayout()
-create_layout.create_score_and_timmer_section("target", 30, 60).create_player(1, "dileep", 0, 5).create_player(2, "manikath", 0, 5).create_grid(7, 7)
 
 class Clock{
     constructor(element_id, secs){
         this.elem = document.getElementById(element_id + "_timmer")
         this.secs = secs
-        this.intv = none
         this.set_timmer()
     }
 
@@ -162,35 +158,78 @@ class Clock{
         this.elem.innerHTML = this.secs
     }
 
-    run_down_clock(){
-        this.intv = setInterval(this.dec_timmer, 1000);
+    run_down_clock(clock_obj){
+        clock_obj.set_timmer();
+        var intv = setInterval(clock_obj.dec_timmer, 1000, clock_obj.elem);
+        setTimeout(() => {
+            clearInterval(intv);
+        }, clock_obj.secs*1000)
     }
 
-    dec_timmer(intv_obj){
-        if (this.elem.innerHTML == 0){
-            clearInterval(this.intv_obj)
-            this.intv = none
-        }
-        else{
-            this.elem.innerHTML = parseInt(this.elem.innerHTML) - 1
-        }
+    dec_timmer(elem){
+        elem.innerHTML = parseInt(elem.innerHTML) - 1;
     }
 }
 
 class Player extends Clock{
-    constructor(player_id, name){
-        this.player_id = player_id
-        this.name = name
-        this.score = document.getElementById(this.player_id + "_score")
-        this.timmer = document.getElementById(this.player_id + "_timmer")
-        this.set_name()
+    constructor(player_num, player_intv){
+        super("player_" + player_num, player_intv)
+        this.player = "player_" + player_num
+        this.player_intv = player_intv
+        this.player_score = document.getElementById(this.player + "_score")
+        this.timmer = document.getElementById(this.player + "_timmer")
     }
 
-    set_name(){
-        document.getElementById(this.player_id).innerHTML = this.name
-    }
-
-    set_score(scored){
-        this.score.innerHTML = parseInt(this.score.innerHTML) + scored
+    update_score(player_obj){
+        var add_value = document.getElementById("temp").innerHTML
+        disable_btn(add_value)
+        player_obj.player_score.innerHTML =  parseInt(player_obj.player_score.innerHTML)+ parseInt(add_value)
     }
 }
+
+class Game{
+    constructor(total_time, player_time, target_score){
+        this.total_time = total_time
+        this.player_time = player_time
+        this.target_score = target_score
+    }
+    
+    create_engine(){
+        var ply_1_name = window.prompt("Enter player 1's name:") || "player_1"
+        var ply_2_name = window.prompt("Enter player 2's name:") || "player_2"
+        var create_layout_obj = new CreateLayout(this.target_score, this.total_time, ply_1_name, ply_2_name, this.player_time, 7, 7)
+        create_layout_obj.create_layout()
+        return this
+    }
+
+    start_game_loop(){
+        var  player_queue = [new Player(1, this.player_time), new Player(2, this.player_time)]
+        var target_clock = new Clock("target", this.total_time)
+        target_clock.run_down_clock(target_clock)
+        var player = player_queue.shift()
+        player.run_down_clock(player)
+        var intv_obj = setInterval(() => {
+            player.update_score(player)
+            player_queue.push(player)
+            player = player_queue.shift()
+            player.run_down_clock(player)
+        }, this.player_time*1000)
+        setTimeout(() =>{
+            clearInterval(intv_obj)
+            this.judge_game()
+        }, this.total_time*1000)
+    }
+
+    judge_game(){
+        console.log("test")
+    }
+}
+
+game  = new Game(30, 5, 60)
+game.create_engine().start_game_loop()
+// clock = new Clock("target", 30)
+// var test = document.createElement("button")
+// test.innerHTML = "test"
+// test.setAttribute("onClick", "clock.run_down_clock()")
+// document.body.appendChild(test)
+
