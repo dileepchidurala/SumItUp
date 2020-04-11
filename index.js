@@ -234,22 +234,22 @@ class Game{
         var trg = parseInt(document.getElementById("target_score").innerHTML)
         var player_1 = document.getElementById("player_1").innerHTML
         var player_2 = document.getElementById("player_2").innerHTML
-        if(sc1 > trg && sc2 > trg || sc1 == sc2){
-            alert("No one Wins")
-        }
-        else if(sc1==trg || sc2 > trg){
-            alert(player_1 + " wins")
-        }
-        else if(sc2==trg || sc1 > trg){
-            alert(player_2 + " wins")        
-        }
-        else{
+        if(sc1 < trg && sc2 < trg){
             if(trg-sc1 < trg - sc2){
                 alert(player_1 + " wins")
             }
             else{
                 alert(player_2 + " wins") 
             }
+        }
+        else if (sc1 <= trg && sc2 > trg){
+            alert(player_1 + " wins")
+        }
+        else if (sc1 > trg && sc2 <= trg){
+            alert(player_2 + " wins")
+        }
+        else{
+            alert("No one Wins")
         }
         location.reload()
     }
