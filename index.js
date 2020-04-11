@@ -73,12 +73,18 @@ function click_btn(id){
     document.getElementById("temp").innerHTML = button.innerHTML
 }
 
-function disable_btn(num){
+function disable_btn(num, player, color){
     var grid_elem = document.getElementById("game_id").children;
     for(var idx = 0; idx<grid_elem.length; idx++){
         if(grid_elem[idx].innerHTML == num){
             grid_elem[idx].disabled = true;
-            grid_elem[idx].style.backgroundColor = "lightgrey"
+            grid_elem[idx].style.backgroundColor = color
+            if(document.getElementById(player + "_grid").innerHTML){
+                document.getElementById(player + "_grid").innerHTML = document.getElementById(player + "_grid").innerHTML + "," + num
+            }
+            else{
+                document.getElementById(player + "_grid").innerHTML = num
+            }
         }
     }
 }
@@ -172,17 +178,18 @@ class Clock{
 }
 
 class Player extends Clock{
-    constructor(player_num, player_intv){
+    constructor(player_num, player_intv, color){
         super("player_" + player_num, player_intv)
         this.player = "player_" + player_num
         this.player_intv = player_intv
         this.player_score = document.getElementById(this.player + "_score")
         this.timmer = document.getElementById(this.player + "_timmer")
+        this.player_color = color
     }
 
     update_score(player_obj){
         var add_value = document.getElementById("temp").innerHTML
-        disable_btn(add_value)
+        disable_btn(add_value, this.player,this.player_color)
         player_obj.player_score.innerHTML =  parseInt(player_obj.player_score.innerHTML)+ parseInt(add_value)
         document.getElementById("temp").innerHTML = 0
     }
@@ -204,7 +211,7 @@ class Game{
     }
 
     start_game_loop(){
-        var  player_queue = [new Player(1, this.player_time), new Player(2, this.player_time)]
+        var  player_queue = [new Player(1, this.player_time, "lightgreen"), new Player(2, this.player_time, "lightblue")]
         var target_clock = new Clock("target", this.total_time)
         target_clock.run_down_clock(target_clock)
         var player = player_queue.shift()

@@ -55,6 +55,14 @@ body{
     margin: auto;
 }
 
+
+.selected_grid{
+    margin: auto;
+    font-size: large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+
 .grid_item{
     background-color: rgb(76, 175, 175);
     border: none;
